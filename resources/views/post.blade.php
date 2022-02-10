@@ -6,10 +6,8 @@
 <body>
 
 <article>
-    <h1><a href="/post">First Post</a></h1>
-    <p>
-        shut it hahahahaha literally shut up asiogjfsdkfhgkdjsfgkjrdsgkjdfsbgjkdsfhgkdfjhgkfdjxhgkjdfngjdfbngjkdfxgjdfbnxkjhdfxngk fdbjgkbdfskjghdsfkjbgjksfdhbghjkdfsbgjkdfbgjk
-    </p>
+    <?= $post ?>
+
 </article>
 
 <a href ="/"> Go Back</a>
