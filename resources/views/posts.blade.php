@@ -1,6 +1,5 @@
 <x-layout>
     <h1> buh log</h1>
-
     @foreach ($posts as $post)
         <article>
             <h1>
@@ -10,7 +9,7 @@
             </h1>
 
             <div>
-                {!! $post->body !!}
+                {!! $post->excerpt !!}
             </div>
         </article>
     @endforeach
