@@ -1,23 +1,18 @@
-<!doctype html>
+<x-layout>
+    <h1> buh log</h1>
 
-<title>My Blog</title>
-<link rel="stylesheet" href="/app.css">
+    @foreach ($posts as $post)
+        <article>
+            <h1>
+                <a href="/posts/{{ $post->slug }}">
+                    {{ $post->title }}
+                </a>
+            </h1>
 
-<body>
-<h1> buh log</h1>
+            <div>
+                {!! $post->body !!}
+            </div>
+        </article>
+    @endforeach
 
-<article>
-    <h1><a href="/posts/post-1">First Post</a></h1>
-    <p>
-        shut it hahahahaha literally shut up asiogjfsdkfhgkdjsfgkjrdsgkjdfsbgjkdsfhgkdfjhgkfdjxhgkjdfngjdfbngjkdfxgjdfbnxkjhdfxngk fdbjgkbdfskjghdsfkjbgjksfdhbghjkdfsbgjkdfbgjk
-    </p>
-</article>
-
-<article>
-    <h1><a href="/posts/post-2">Second Post</a></h1>
-    <p>
-        shut it hahahahaha literally shut up asiogjfsdkfhgkdjsfgkjrdsgkjdfsbgjkdsfhgkdfjhgkfdjxhgkjdfngjdfbngjkdfxgjdfbnxkjhdfxngk fdbjgkbdfskjghdsfkjbgjksfdhbghjkdfsbgjkdfbgjk
-    </p>
-</article>
-
-</body>
+</x-layout>
