@@ -19,11 +19,9 @@ use Illuminate\Support\Facades\Cache;
 
 Route::get('/', function () {
 
-    $posts = Post::all();
-
 
     return view('posts', [
-        'posts' => $posts
+        'posts' => Post::with('category')->get()
     ]);
 });
 
