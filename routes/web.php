@@ -22,7 +22,8 @@ Route::get('/', function () {
 
 
     return view('posts', [
-        'posts' => Post::latest()->get()
+        'posts' => Post::latest()->get(),
+        'categories' => Category::all()
     ]);
 });
 
@@ -48,3 +49,11 @@ Route::get('authors/{author:username}', function (User $author){
         'posts' => $author->posts
     ]);
 });
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
