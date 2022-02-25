@@ -57,7 +57,10 @@
                                 </header>
                                 <div class="mt-6">
                                 <textarea name="body" class="w-full text-sm focus:outline-none focus:ring" rows="5"
-                                          placeholder="Write a comment..."></textarea>
+                                          placeholder="Write a comment..." required></textarea>
+                                    @error('body')
+                                        <span class="text-xs text-red-500">{{ $message }}</span>
+                                    @enderror
                                 </div>
 
                                 <div class="flex justify-end mt-2 pt-2">
