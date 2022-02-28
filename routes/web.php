@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('ping', function () {
+Route::post('newsletter', function () {
+    request()->validate(['email' => 'required|email']);
 
     $mailchimp = new \MailchimpMarketing\ApiClient();
 
@@ -26,8 +27,20 @@ Route::get('ping', function () {
         'server' => 'us14'
     ]);
 
-    $response = $mailchimp->ping->get();
-    print_r($response);
+    try {
+        $response = $mailchimp->lists->addListMember('312964cc7e', [
+            'email_address' => request('email'),
+            'status' => 'subscribed'
+        ]);
+    }
+    catch (\Exception $e)
+    {
+        throw \Illuminate\Validation\ValidationException::withMessages([
+            'email' => 'Invalid email, stupid!'
+        ]);
+    }
+
+    return redirect('/')->with('success', 'You have signed up for our newsletter. Enjoy the spam!');
 });
 
 Route::get('/', [PostController::class, 'index'])->name('home');
