@@ -37,4 +37,5 @@ Route::post('newsletter', NewsletterController::class);
 Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth');
 
 //TEST ROUTES
-Route::get('setting', [SettingController::class, 'read'])->middleware('auth');
+Route::get('settings', [SettingController::class, 'index'])->middleware('auth');
+//Route::post('settings', [SettingController::class, 'store'])->middleware('auth');
