@@ -12,10 +12,11 @@ class SettingController extends Controller
 {
     public function index()
     {
-        // get Sam to consolidate this, it could be improved
+        // get Sam to consolidate this, it could be improved, maybe a different way instead of get()?
         return view('settings.index',[
             'settings' => auth()->user()->settings()->get()
         ]);
+
     }
 
     public static function create(User $user, string $key, string $value)
@@ -30,24 +31,16 @@ class SettingController extends Controller
 
     }
 
-    public function store()
+    public function store(StoreSettingRequest $request)
     {
         //creates a user setting for the currently logged in user /w validation
 
 
-        //TODO: REFACTOR to StoreSettingRequest and complete authorization
-        //$validated = $request->validated();
-        $attributes = request()->validate([
-            'key' => ['required', 'string', 'min:2', 'max:255', Rule::unique('settings')->where(function ($query)
-            {
-                return $query->where('user_id', auth()->user()->id);
-            })],
-            'value' => ['required', 'string', 'min:2', 'max:255']
-        ]);
-
+        //TODO: complete authorization in StoreSettingRequest
+        $validated = $request->validated();
 
         auth()->user()->settings()->create(
-            $attributes
+            $validated
         );
 
         return redirect('settings')->with('success', 'Setting created :)');
@@ -55,7 +48,14 @@ class SettingController extends Controller
 
     public function read(string $key)
     {
-        //TODO: read/get a user's setting
+        //TODO: fix else return/throw exception
+        $settings = auth()->user()->settings()->get()->whereStrict('key', $key);
+
+            if ($settings->isNotEmpty()) {
+                return ($settings->first()->value);
+            }
+
+            return 'Key not found';
     }
 
     public function update(Setting $setting)
@@ -70,6 +70,18 @@ class SettingController extends Controller
 
     public function show(Setting $setting)
     {
+        //TODO: show only the setting that matches the key that is associated with logged in user, currently shows first matching entry
+        //AUTH MAYBE??????
+        /*if ($setting->user_id === auth()->user()->id){
 
+        }
+        else
+        {
+            dd('key not found in user');
+        }
+        */
+            return view('settings.show', [
+                'setting' => $setting
+            ]);
     }
 }
