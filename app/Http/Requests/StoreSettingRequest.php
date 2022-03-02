@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
+
+class StoreSettingRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return false;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
+    public function rules()
+    {
+        return [
+            'key' => ['required', 'string', 'min:2', 'max:255', Rule::unique('settings')->where(function ($query)
+            {
+                return $query->where('user_id', auth()->user()->id);
+            })],
+            'value' => ['required', 'string', 'min:2', 'max:255']
+        ];
+    }
+}

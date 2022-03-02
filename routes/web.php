@@ -38,4 +38,5 @@ Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth'
 
 //TEST ROUTES
 Route::get('settings', [SettingController::class, 'index'])->middleware('auth');
+Route::post('settings/new', [SettingController::class, 'store'])->middleware('auth');
 //Route::post('settings', [SettingController::class, 'store'])->middleware('auth');
