@@ -24,7 +24,7 @@ class SettingController extends Controller
         //creates a user setting from the parameters. use in code only. will be redundant probably.
 
         $user->settings()->create([
-            'user_id' => $user->id,
+            'user_id' => $user->getKey(),
             'key' => $key,
             'value' => $value
         ]);
@@ -35,13 +35,11 @@ class SettingController extends Controller
     {
         //creates a user setting for the currently logged in user /w validation
 
-
         //TODO: complete authorization in StoreSettingRequest
         $validated = $request->validated();
+        $user = auth()->user();
 
-        auth()->user()->settings()->create(
-            $validated
-        );
+        $user->settings()->create($validated);
 
         return redirect('settings')->with('success', 'Setting created :)');
     }
@@ -49,13 +47,14 @@ class SettingController extends Controller
     public function read(string $key)
     {
         //TODO: fix else return/throw exception
-        $settings = auth()->user()->settings()->get()->whereStrict('key', $key);
+        $user = auth()->user();
+        $settings = $user->settings()->where('key', $key)->firstOrFail();
 
             if ($settings->isNotEmpty()) {
                 return ($settings->first()->value);
             }
 
-            return 'Key not found';
+            return null;
     }
 
     public function update(Setting $setting)
@@ -71,7 +70,7 @@ class SettingController extends Controller
     public function show(Setting $setting)
     {
         //TODO: show only the setting that matches the key that is associated with logged in user, currently shows first matching entry
-        //AUTH MAYBE??????
+        //AUTH MAYBE?????? ask sam
         /*if ($setting->user_id === auth()->user()->id){
 
         }

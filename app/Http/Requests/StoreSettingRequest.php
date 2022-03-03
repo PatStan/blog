@@ -25,10 +25,14 @@ class StoreSettingRequest extends FormRequest
     public function rules()
     {
         return [
-            'key' => ['required', 'string', 'min:2', 'max:255', Rule::unique('settings')->where(function ($query)
-            {
-                return $query->where('user_id', auth()->user()->id);
-            })],
+            'key' => [
+                'required',
+                'string',
+                'min:2','max:255',
+                Rule::unique('settings')->where(function ($query)
+                {
+                    return $query->where('user_id', auth()->user()->getKey());
+                })],
             'value' => ['required', 'string', 'min:2', 'max:255']
         ];
     }
