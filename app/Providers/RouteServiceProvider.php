@@ -37,6 +37,12 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->configureRateLimiting();
 
+        Route::bind('setting', function ($value)
+        {
+            $user = auth()->user();
+            return $user->settings()->where('key', $value)->firstOrFail();
+        });
+
         $this->routes(function () {
             Route::prefix('api')
                 ->middleware('api')

@@ -57,28 +57,23 @@ class SettingController extends Controller
             return null;
     }
 
-    public function update(Setting $setting)
+    public function update(Setting $setting) //change to updateRequest, request before
     {
         //TODO: update a user's setting
+        //$model->update()
     }
 
     public function destroy(Setting $setting)
     {
         //TODO: destroy a setting from DB
+        //$model->delete()
+        //POST route
+        //laravel post and put protected csrf
     }
 
     public function show(Setting $setting)
     {
         //TODO: show only the setting that matches the key that is associated with logged in user, currently shows first matching entry
-        //AUTH MAYBE?????? ask sam
-        /*if ($setting->user_id === auth()->user()->id){
-
-        }
-        else
-        {
-            dd('key not found in user');
-        }
-        */
             return view('settings.show', [
                 'setting' => $setting
             ]);
