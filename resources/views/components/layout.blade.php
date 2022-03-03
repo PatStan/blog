@@ -95,5 +95,4 @@
 </section>
 
 <x-flash/>
-x
 </body>
