@@ -13,4 +13,15 @@ class Setting extends Model
         'key',
         'value'
     ];
+
+
+    //ASK SAM IF YOU WANT TO EAGER LOAD THE USER WITH THE SETTING? Could be useful.
+    /*protected $with = [
+        'user'
+    ]; */
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

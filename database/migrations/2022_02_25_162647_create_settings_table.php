@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->string('key');
             $table->string('value');
+            $table->unique(['key', 'user_id']);
             $table->timestamps();
         });
     }
