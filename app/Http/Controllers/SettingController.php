@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreSettingRequest;
+use App\Http\Requests\UpdateSettingRequest;
 use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -44,21 +45,24 @@ class SettingController extends Controller
         return redirect('settings')->with('success', 'Setting created :)');
     }
 
-    public function read(string $key)
+    public function read(string $key) //this could be used in edit/update to read from a key, but instead I am using route/model binding
     {
         //TODO: fix else return/throw exception
         $user = auth()->user();
         $settings = $user->settings()->where('key', $key)->firstOrFail();
 
-            if ($settings->isNotEmpty()) {
-                return ($settings->first()->value);
-            }
+        if ($settings->isNotEmpty()) {
+            return ($settings->first()->value);
+        }
 
-            return null;
+        return null;
     }
 
-    public function update(Setting $setting) //change to updateRequest, request before
+    public function update(UpdateSettingRequest $request, Setting $setting) //change to updateRequest, request before
     {
+        $validated = $request->validated();
+        $setting->update($validated);
+        return redirect()->back()->with('success', 'Setting updated!');
         //TODO: update a user's setting
         //$model->update()
     }
