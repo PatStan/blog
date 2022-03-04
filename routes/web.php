@@ -5,6 +5,7 @@ use App\Http\Controllers\PostCommentsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
+use App\Http\Controllers\SettingController;
 use App\Services\MailchimpNewsletter;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\ValidationException;
@@ -28,7 +29,7 @@ Route::post('posts/{post:slug}/comments', [PostCommentsController::class, 'store
 Route::get('register', [RegisterController::class, 'create'])->middleware('guest');
 Route::post('register', [RegisterController::class, 'store'])->middleware('guest');
 
-Route::get('login', [SessionsController::class, 'create'])->middleware('guest');
+Route::get('login', [SessionsController::class, 'create'])->middleware('guest')->name('login');
 Route::post('login', [SessionsController::class, 'store'])->middleware('guest');
 Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth');
 
@@ -37,3 +38,10 @@ Route::post('newsletter', NewsletterController::class);
 Route::get('admin/posts/create', [PostController::class,'create'])->middleware('admin');
 Route::post('admin/posts', [PostController::class,'store'])->middleware('admin');
 
+Route::post('logout', [SessionsController::class, 'destroy'])->middleware('auth');
+
+Route::get('settings', [SettingController::class, 'index'])->middleware('auth');
+Route::post('settings/new', [SettingController::class, 'store'])->middleware('auth');
+Route::get('settings/{setting:key}', [SettingController::class, 'show'])->middleware('auth');
+Route::put('settings/{setting:key}', [SettingController::class, 'update'])->middleware('auth');
+Route::delete('settings/{setting:key}', [SettingController::class, 'destroy'])->middleware('auth');
