@@ -41,11 +41,21 @@
                         </div>
 
                         <div class="mb-6">
-                            <button type="submit" class="bg-blue-400 text-white rounded py-2 px-4 hover:bg-blue-500">
+                            <button type="submit" class="bg-blue-400 text-white rounded py-2 px-4 hover:bg-blue-500 justify-center">
                                 Submit
                             </button>
                         </div>
 
+                    </form>
+                </div>
+
+                <div class="flex items-center lg:justify-center text-xl mt-4">
+                    <form method="POST" action="/settings/{{ $setting->key }}" class="mt-10">
+                        @method('DELETE')
+                        @csrf
+                        <button type="submit" class="bg-red-400 text-white rounded py-2 px-4 hover:bg-red-600">
+                            Delete
+                        </button>
                     </form>
                 </div>
 

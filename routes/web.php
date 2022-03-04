@@ -41,4 +41,5 @@ Route::get('settings', [SettingController::class, 'index'])->middleware('auth');
 Route::post('settings/new', [SettingController::class, 'store'])->middleware('auth');
 Route::get('settings/{setting:key}', [SettingController::class, 'show'])->middleware('auth');
 Route::put('settings/{setting:key}', [SettingController::class, 'update'])->middleware('auth');
+Route::delete('settings/{setting:key}', [SettingController::class, 'destroy'])->middleware('auth');
 //settings/{setting:key}/update, POST or PUT
